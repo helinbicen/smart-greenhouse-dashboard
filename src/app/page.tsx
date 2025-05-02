@@ -6,17 +6,16 @@ const Home = () => {
   const router = useRouter();
 
   const handleRedirect = () => {
-    router.push("/cotton");
+    router.push("/dashboard");
   };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-100 to-green-50 flex flex-col items-center justify-center text-center px-4">
       <h1 className="text-4xl md:text-5xl font-bold text-green-800 mb-4">
-        🌱 Bitki Takip Paneline Hoş Geldiniz
+        🌱 EcoPulse Bitki Takip Paneline Hoş Geldiniz
       </h1>
       <p className="text-lg text-gray-700 mb-8 max-w-xl">
-        Bu uygulama sayesinde bitkinizin sıcaklık, nem ve çevresel ihtiyaçlarını
-        gerçek zamanlı olarak görüntüleyebilirsiniz.
+        Bu uygulama sayesinde bitkinizin sıcaklık, nem ve çevresel ihtiyaçlarını gerçek zamanlı olarak görüntüleyebilirsiniz.
       </p>
       <button
         onClick={handleRedirect}
