@@ -11,6 +11,8 @@ export const MoistureCategory = {
 } as const;
 
 export type SensorData = {
+  date: string;
+  time: string;
   moisture: number;
   temperature: number;
   pumperOn: boolean;
