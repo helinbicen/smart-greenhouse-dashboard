@@ -10,6 +10,7 @@ import { SensorData } from "@/types/sensor";
 import TemperatureAndMoistureChart from "./TemperatureMoistureChart";
 import HeatingAndCoolingDemandChart from "./HeatingCoolingChart";
 import { Loader } from "react-feather";
+import * as XLSX from "xlsx";
 
 const ReportSelector = () => {
   const [timeframe, setTimeframe] = useState("daily");
@@ -31,11 +32,22 @@ const ReportSelector = () => {
     // setReportData(data ? data : mockDailyData);
   }, [data, timeframe]);
 
-  const handleTimeframeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTimeframeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setTimeframe(event.target.value);
     setReportData(null);
   };
-  
+
+  const handleDownloadExcel = () => {
+    if (!reportData) return;
+
+    const ws = XLSX.utils.json_to_sheet(reportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Rapor");
+
+    XLSX.writeFile(wb, `${timeframe}_rapor.xlsx`);
+  };
 
   return (
     <div className="w-full h-screen p-6 bg-gray-50">
@@ -76,6 +88,14 @@ const ReportSelector = () => {
           <h2 className="text-center text-2xl font-semibold mb-8 text-gray-800">
             Veriler ({timeframe})
           </h2>
+          <div className="mb-6 text-center">
+            <button
+              onClick={handleDownloadExcel}
+              className="py-2 px-4 bg-green-500 text-white rounded-lg shadow-md cursor-pointer"
+            >
+              Excel Olarak İndir
+            </button>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-lg">
