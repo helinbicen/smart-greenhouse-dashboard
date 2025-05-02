@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import TemperatureAndMoistureChart from "./TemperatureMoistureChart";
-import HeatingAndCoolingDemandChart from "./HeatingCoolingChart";
 import useFetchData from "@/hooks/useFetchData";
 import ReportSelector from "./ReportSelector";
 import { Loader } from "react-feather";

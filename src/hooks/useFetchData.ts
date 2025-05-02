@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { SensorData } from "@/types/sensor";
-import { generateMockData, mockDailyData } from "@/data/sensorData";
+import { generateMockData } from "@/data/sensorData";
 
 const useFetchData = (endpoint: string, isReport: boolean = false) => {
   const [data, setData] = useState<SensorData | SensorData[] | null>(null);
@@ -25,8 +25,12 @@ const useFetchData = (endpoint: string, isReport: boolean = false) => {
           setData(mockData);
           // setData(mockDailyData)
         }
-      } catch (err: any) {
-        setError(err.message || "Veri alınırken bir hata oluştu.");
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error(err.message);
+        } else {
+          setError("Veri alınırken bir hata oluştu.");
+        }
       } finally {
         setLoading(false);
       }
