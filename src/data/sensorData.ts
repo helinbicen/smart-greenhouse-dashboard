@@ -90,3 +90,31 @@ export const mockSensorData: SensorData[] = [
     moistureTemperatureRatio: 2,
   },
 ];
+
+export const generateMockData = (): SensorData => {
+  const now = new Date();
+  const date = now.toString();
+  const time = now.getHours().toString();
+  const temperature = Math.random() * (30 - 15) + 15;
+  const moisture = Math.random() * (100 - 20) + 20;
+
+  const temperatureCategory =
+    temperature < 18 ? "low" : temperature < 25 ? "medium" : "high";
+  const moistureCategory =
+    moisture < 30 ? "dry" : moisture < 70 ? "optimal" : "wet";
+
+  return {
+    date,
+    time,
+    moisture,
+    temperature,
+    pumperOn: Math.random() < 0.5, // %50 olasılıkla true
+    heaterOn: Math.random() < 0.5, // %50 olasılıkla true
+    coolerOn: Math.random() < 0.5, // %50 olasılıkla true
+    temperatureCategory,
+    moistureCategory,
+    heatingDemand: Math.random() * 100,
+    coolingDemand: Math.random() * 100,
+    moistureTemperatureRatio: moisture / temperature,
+  };
+};

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -24,24 +24,34 @@ ChartJS.register(
 );
 
 type TemperatureAndMoistureChartProps = {
-  data: SensorData[];
+  data?: SensorData | SensorData[];
 };
 
 const TemperatureAndMoistureChart: React.FC<
   TemperatureAndMoistureChartProps
 > = ({ data }) => {
+  const [history, setHistory] = useState<SensorData[]>([]);
+
+  useEffect(() => {
+    if (!data) return;
+
+    const newEntries = Array.isArray(data) ? data : [data];
+
+    setHistory((prev) => [...prev, ...newEntries]);
+  }, [data]);
+
   const chartData = {
-    labels: data.map((item) => item.time),
+    labels: history.map((item) => item.time),
     datasets: [
       {
         label: "Sıcaklık (°C)",
-        data: data.map((item) => item.temperature),
+        data: history.map((item) => item.temperature),
         borderColor: "rgba(75, 192, 192, 1)",
         fill: false,
       },
       {
         label: "Nem (%)",
-        data: data.map((item) => item.moisture),
+        data: history.map((item) => item.moisture),
         borderColor: "rgba(255, 99, 132, 1)",
         fill: false,
       },
@@ -50,7 +60,7 @@ const TemperatureAndMoistureChart: React.FC<
 
   return (
     <>
-      <h1 className="flex justify-center">Sıcaklık ve Nem</h1>
+      <h1 className="flex justify-center text-green-700">Sıcaklık ve Nem</h1>
       <Line data={chartData} />
     </>
   );
