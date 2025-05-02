@@ -1,16 +1,18 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import TemperatureAndMoistureChart from "./TemperatureMoistureChart";
 import HeatingAndCoolingDemandChart from "./HeatingCoolingChart";
 import useFetchData from "@/hooks/useFetchData";
+import ReportSelector from "./ReportSelector";
+import { Loader } from "react-feather";
+import RealtimeData from "./RealtimeData";
 
 const Dashboard = () => {
   const { data, loading, error } = useFetchData("sensorData");
+  const [viewType, setViewType] = useState<"historical" | "realTime">();
 
   if (loading) {
-    return (
-      <div className="text-center text-lg mt-10">Veriler yükleniyor...</div>
-    );
+    return <Loader className="animate-spin text-blue-500" size={40} />;
   }
 
   if (error) {
@@ -23,51 +25,43 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-white p-6">
-      <h1 className="text-3xl font-bold text-center mb-8 text-green-700">
+      <h1 className="text-3xl font-bold text-center mb-8 text-green-700 mt-16">
         🌿 Bitki İzleme Paneli
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        <div className="bg-white rounded-2xl shadow p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            Anlık Veriler
-          </h2>
-          <div className="space-y-2 text-gray-700">
-            <p>
-              <strong>Sıcaklık:</strong> {data.temperature} °C
-            </p>
-            <p>
-              <strong>Nem:</strong> {data.moisture} %
-            </p>
-            <p>
-              <strong>Soğutma Talebi:</strong> {data.coolingDemand}
-            </p>
-            <p>
-              <strong>Isıtma Talebi:</strong> {data.heatingDemand}
-            </p>
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-10">
+        <div
+          className={`bg-green-50 p-6 rounded-lg shadow-md cursor-pointer transform transition-all duration-300 ${
+            viewType === "historical"
+              ? "bg-green-100 text-gray-800"
+              : "bg-white text-gray-800"
+          } hover:bg-green-200 hover:scale-105`}
+          onClick={() => setViewType("historical")}
+        >
+          <h3 className="text-lg font-semibold mb-3">Geçmiş Veriler</h3>
+          <p className="text-gray-600">
+            Geçmiş verilere dayalı raporlara erişim sağlar.
+          </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Açıklama</h2>
+        <div
+          className={`bg-green-50 p-6 rounded-lg shadow-md cursor-pointer transform transition-all duration-300 ${
+            viewType === "realTime"
+              ? "bg-green-100 text-gray-800"
+              : "bg-white text-gray-800"
+          } hover:bg-green-200 hover:scale-105`}
+          onClick={() => setViewType("realTime")}
+        >
+          <h3 className="text-lg font-semibold mb-3">Anlık Veriler</h3>
           <p className="text-gray-600">
-            Bu panel, bitki ortamının sıcaklık ve nem verilerini analiz eder.
-            Aynı zamanda ısıtma ve soğutma taleplerini tahmin ederek görsel hale
-            getirir.
+            Gerçek zamanlı verilerle bitki ortamını izleyin.
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl shadow p-4">
-          <TemperatureAndMoistureChart data={data} />
-          {/* can also be tested with mockSensorData */}
-        </div>
-        <div className="bg-white rounded-2xl shadow p-4">
-          <HeatingAndCoolingDemandChart data={data} />
-          {/* can also be tested with mockSensorData */}
-        </div>
-      </div>
+      {viewType === "historical" && <ReportSelector />}
+
+      {viewType === "realTime" && <RealtimeData data={data} />}
     </div>
   );
 };

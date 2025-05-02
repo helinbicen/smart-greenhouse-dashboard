@@ -56,9 +56,12 @@ const HeatingAndCoolingDemandChart: React.FC<
 
   return (
     <>
-      <h1 className="flex justify-center text-green-700">
-        Isıtma ve Soğutma İhtiyacı
+      <h1 className="text-xl font-semibold text-gray-700 mb-4">
+        Isıtma ve Soğutma Talebi Grafiği
       </h1>
+      <h2 className="flex justify-center text-green-700">
+        Isıtma ve Soğutma İhtiyacı
+      </h2>
       <Bar data={chartData} />
     </>
   );

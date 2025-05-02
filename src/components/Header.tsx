@@ -17,7 +17,7 @@ const Header = () => {
         </Link>
         <nav className="space-x-6">
           <Link href="/cotton">
-            <span className={`hover:text-green-700 transition ${isActive("/cotton")}`}>
+            <span className={`hover:text-green-700 transition ${isActive("/dashboard")}`}>
               Takip Paneli
             </span>
           </Link>

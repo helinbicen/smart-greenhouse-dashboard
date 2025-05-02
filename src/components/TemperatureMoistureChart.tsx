@@ -60,7 +60,9 @@ const TemperatureAndMoistureChart: React.FC<
 
   return (
     <>
-      <h1 className="flex justify-center text-green-700">Sıcaklık ve Nem</h1>
+
+<h1 className="text-xl font-semibold text-gray-700 mb-4">Sıcaklık ve Nem Grafiği</h1>
+      <h2 className="flex justify-center text-green-700">Sıcaklık ve Nem</h2>
       <Line data={chartData} />
     </>
   );

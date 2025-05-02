@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { SensorData } from "@/types/sensor";
-import { generateMockData, mockSensorData } from "@/data/sensorData";
+import { generateMockData, mockDailyData } from "@/data/sensorData";
 
-const useFetchData = (endpoint: string) => {
-  const [data, setData] = useState<SensorData | null>(null);
+const useFetchData = (endpoint: string, isReport: boolean = false) => {
+  const [data, setData] = useState<SensorData | SensorData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const apiUrl = process.env.API_URL;
@@ -21,12 +21,9 @@ const useFetchData = (endpoint: string) => {
           const response = await axios.get(`${apiUrl}/${endpoint}`);
           setData(response.data);
         } else {
-          const mockData = generateMockData(); // TODO: Will be removed after backend integration
+          const mockData = generateMockData(); // TODO: Backend entegrasyonu sonrası kaldırılacak
           setData(mockData);
-          // setData(mockSensorData)
-          {
-            /**  // Can be used for stabilized appearance */
-          }
+          // setData(mockDailyData)
         }
       } catch (err: any) {
         setError(err.message || "Veri alınırken bir hata oluştu.");
@@ -34,14 +31,19 @@ const useFetchData = (endpoint: string) => {
         setLoading(false);
       }
     };
+
     fetchData();
 
     const interval = setInterval(() => {
-      fetchData();
-    }, 1000); // TODO: Set to 1 minute for logic control
+      if (!isReport) {
+        fetchData();
+      } else {
+        fetchData();
+      }
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, [endpoint, apiUrl]);
+  }, [endpoint, apiUrl, isReport]);
 
   return { data, loading, error };
 };
