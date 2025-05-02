@@ -1,9 +1,10 @@
-import React from 'react'
+import Dashboard from "@/components/Dashboard";
+import TemperatureAndMoistureChart from "@/components/TemperatureMoistureChart";
+import { mockSensorData } from "@/data/sensorData";
+import React from "react";
 
 const page = () => {
-  return (
-    <div>Cotton</div>
-  )
-}
+  return <Dashboard />;
+};
 
-export default page
+export default page;
