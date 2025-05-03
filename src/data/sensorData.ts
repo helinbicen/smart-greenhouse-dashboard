@@ -569,7 +569,7 @@ export const mockMonthlyData: SensorData[] = [
     moistureCategory: MoistureCategory.WET,
     heatingDemand: 0,
     coolingDemand: 12,
-    moistureTemperatureRatio: 2.60,
+    moistureTemperatureRatio: 2.6,
   },
   {
     date: "28 May 2025",
@@ -583,7 +583,7 @@ export const mockMonthlyData: SensorData[] = [
     moistureCategory: MoistureCategory.WET,
     heatingDemand: 4,
     coolingDemand: 13,
-    moistureTemperatureRatio: 2.60,
+    moistureTemperatureRatio: 2.6,
   },
   {
     date: "29 May 2025",
@@ -611,14 +611,16 @@ export const mockMonthlyData: SensorData[] = [
     moistureCategory: MoistureCategory.OPTIMAL,
     heatingDemand: 5,
     coolingDemand: 0,
-    moistureTemperatureRatio: 2.90,
+    moistureTemperatureRatio: 2.9,
   },
 ];
 
 export const generateMockData = (): SensorData => {
   const now = new Date();
   const date = now.toString();
-  const time = now.getHours().toString();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const time = `${hours}:${minutes}`;
   const temperature = Math.random() * (30 - 15) + 15;
   const moisture = Math.random() * (100 - 20) + 20;
 
