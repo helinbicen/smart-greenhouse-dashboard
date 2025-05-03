@@ -1,6 +1,5 @@
 "use client";
 
-import Header from "@/components/Header";
 import { ThemeCategory } from "@/types/theme";
 import { createContext, useContext, useEffect, useState } from "react";
 

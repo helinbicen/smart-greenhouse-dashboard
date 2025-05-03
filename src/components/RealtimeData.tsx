@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  MoistureCategory,
-  SensorData,
-  TemperatureCategory,
-} from "@/types/sensor";
+import { SensorData } from "@/types/sensor";
 import React from "react";
 import TemperatureAndMoistureChart from "./TemperatureMoistureChart";
 import HeatingAndCoolingDemandChart from "./HeatingCoolingChart";
