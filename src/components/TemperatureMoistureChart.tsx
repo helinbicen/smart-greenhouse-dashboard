@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import { SensorData } from "@/types/sensor";
 import { formatChartLabels } from "@/helpers/chartFormatter";
-import { Timeframe } from "@/types/timeframe";
+import { Timeframe, TimeframeCategory } from "@/types/timeframe";
 
 ChartJS.register(
   CategoryScale,
@@ -37,11 +37,20 @@ const TemperatureAndMoistureChart: React.FC<
 
   useEffect(() => {
     if (!data) return;
-
+  
     const newEntries = Array.isArray(data) ? data : [data];
-
-    setHistory((prev) => [...prev, ...newEntries]);
-  }, [data]);
+  
+    const sortedEntries = newEntries.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+  
+    if (timeframe === TimeframeCategory.REALTIME) {
+      setHistory((prev) => [...prev, ...sortedEntries]);
+    } else {
+      setHistory(sortedEntries);
+    }
+  }, [data, timeframe]);
+  
 
   const chartData = {
     labels: formatChartLabels(history, timeframe),

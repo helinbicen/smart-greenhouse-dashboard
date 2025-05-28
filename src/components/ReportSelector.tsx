@@ -23,16 +23,21 @@ const ReportSelector = () => {
   );
 
   useEffect(() => {
-    if (timeframe === TimeframeCategory.WEEKLY) {
-      setReportData(mockWeeklyData);
-    }
-    if (timeframe === TimeframeCategory.MONTHLY) {
-      setReportData(mockMonthlyData);
+    if (Array.isArray(data) && data.length > 0) {
+      setReportData(data);
     } else {
-      setReportData(mockDailyData);
+      switch (timeframe) {
+        case TimeframeCategory.WEEKLY:
+          setReportData(mockWeeklyData);
+          break;
+        case TimeframeCategory.MONTHLY:
+          setReportData(mockMonthlyData);
+          break;
+        default:
+          setReportData(mockDailyData);
+          break;
+      }
     }
-    // Line below will be used when BE is integrated.
-    // setReportData(data ? data : mockDailyData);
   }, [data, timeframe]);
 
   const handleTimeframeChange = (

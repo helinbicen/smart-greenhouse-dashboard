@@ -617,7 +617,7 @@ export const mockMonthlyData: SensorData[] = [
 
 export const generateMockData = (): SensorData => {
   const now = new Date();
-  const date = now.toLocaleDateString("en-GB", {
+  const date = now.toLocaleDateString("tr-TR", {
     day: "2-digit",
     month: "short",
     year: "numeric",
