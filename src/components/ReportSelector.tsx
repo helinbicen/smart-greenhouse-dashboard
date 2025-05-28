@@ -11,19 +11,22 @@ import TemperatureAndMoistureChart from "./TemperatureMoistureChart";
 import HeatingAndCoolingDemandChart from "./HeatingCoolingChart";
 import { Loader } from "react-feather";
 import * as XLSX from "xlsx";
+import { Timeframe, TimeframeCategory } from "@/types/timeframe";
 
 const ReportSelector = () => {
-  const [timeframe, setTimeframe] = useState("daily");
+  const [timeframe, setTimeframe] = useState<Timeframe>(
+    TimeframeCategory.DAILY
+  );
   const [reportData, setReportData] = useState<SensorData[] | null>(null);
   const { data, loading, error } = useFetchData(
     `report?timeframe=${timeframe}`
   );
 
   useEffect(() => {
-    if (timeframe === "weekly") {
+    if (timeframe === TimeframeCategory.WEEKLY) {
       setReportData(mockWeeklyData);
     }
-    if (timeframe === "monthly") {
+    if (timeframe === TimeframeCategory.MONTHLY) {
       setReportData(mockMonthlyData);
     } else {
       setReportData(mockDailyData);
@@ -35,7 +38,7 @@ const ReportSelector = () => {
   const handleTimeframeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setTimeframe(event.target.value);
+    setTimeframe(event.target.value as Timeframe);
     setReportData(null);
   };
 
@@ -65,9 +68,9 @@ const ReportSelector = () => {
           value={timeframe}
           className="p-3 text-lg border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          <option value="daily">Günlük</option>
-          <option value="weekly">Haftalık</option>
-          <option value="monthly">Aylık</option>
+          <option value={TimeframeCategory.DAILY}>Günlük</option>
+          <option value={TimeframeCategory.WEEKLY}>Haftalık</option>
+          <option value={TimeframeCategory.MONTHLY}>Aylık</option>
         </select>
       </div>
 
@@ -99,11 +102,17 @@ const ReportSelector = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <TemperatureAndMoistureChart data={reportData} />
+              <TemperatureAndMoistureChart
+                data={reportData}
+                timeframe={timeframe}
+              />
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <HeatingAndCoolingDemandChart data={reportData} />
+              <HeatingAndCoolingDemandChart
+                data={reportData}
+                timeframe={timeframe}
+              />
             </div>
           </div>
         </div>

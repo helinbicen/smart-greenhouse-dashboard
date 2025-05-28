@@ -5,6 +5,7 @@ import React from "react";
 import TemperatureAndMoistureChart from "./TemperatureMoistureChart";
 import HeatingAndCoolingDemandChart from "./HeatingCoolingChart";
 import PlantMoodIndicator from "./PlantMoodIndicator";
+import { TimeframeCategory } from "@/types/timeframe";
 
 type RealtimeDataProps = {
   data?: SensorData | SensorData[];
@@ -21,11 +22,17 @@ const RealtimeData: React.FC<RealtimeDataProps> = ({ data }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-white rounded-2xl shadow p-4">
-          <TemperatureAndMoistureChart data={data} />
+          <TemperatureAndMoistureChart
+            data={data}
+            timeframe={TimeframeCategory.REALTIME}
+          />
           {/* can also be tested with mockDailyData */}
         </div>
         <div className="bg-white rounded-2xl shadow p-4">
-          <HeatingAndCoolingDemandChart data={data} />
+          <HeatingAndCoolingDemandChart
+            data={data}
+            timeframe={TimeframeCategory.REALTIME}
+          />
           {/* can also be tested with mockDailyData */}
         </div>
       </div>

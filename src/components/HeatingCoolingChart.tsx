@@ -11,7 +11,8 @@ import {
   Legend,
 } from "chart.js";
 import { SensorData } from "@/types/sensor";
-import { formatLabel, getTimeRangeType } from "@/helpers/chartFormatter";
+import { formatChartLabels } from "@/helpers/chartFormatter";
+import { Timeframe } from "@/types/timeframe";
 
 ChartJS.register(
   CategoryScale,
@@ -24,11 +25,12 @@ ChartJS.register(
 
 type HeatingAndCoolingDemandChartProps = {
   data?: SensorData | SensorData[];
+  timeframe: Timeframe;
 };
 
 const HeatingAndCoolingDemandChart: React.FC<
   HeatingAndCoolingDemandChartProps
-> = ({ data }) => {
+> = ({ data, timeframe }) => {
   const [history, setHistory] = useState<SensorData[]>([]);
 
   useEffect(() => {
@@ -39,12 +41,8 @@ const HeatingAndCoolingDemandChart: React.FC<
     setHistory((prev) => [...prev, ...newEntries]);
   }, [data]);
 
-  const timeRangeType = getTimeRangeType(history);
-
   const chartData = {
-    labels: history.map((item) =>
-      formatLabel(item.date, item.time, timeRangeType)
-    ),
+    labels: formatChartLabels(history, timeframe),
     datasets: [
       {
         label: "Isıtma Talebi",
