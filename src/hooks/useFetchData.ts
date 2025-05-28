@@ -9,7 +9,7 @@ const useFetchData = (endpoint: string, isReport: boolean = false) => {
   const [data, setData] = useState<SensorData | SensorData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +43,7 @@ const useFetchData = (endpoint: string, isReport: boolean = false) => {
       } else {
         fetchData();
       }
-    }, 3600);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [endpoint, apiUrl, isReport]);
