@@ -1,13 +1,13 @@
 export const TemperatureCategory = {
-  LOW: "low",
-  MEDIUM: "medium",
-  HIGH: "high",
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
 } as const;
 
 export const MoistureCategory = {
-  DRY: "dry",
-  OPTIMAL: "optimal",
-  WET: "wet",
+  DRY: "DRY",
+  OPTIMAL: "OPTIMAL",
+  WET: "WET",
 } as const;
 
 export type SensorData = {

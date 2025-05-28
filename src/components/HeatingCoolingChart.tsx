@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { SensorData } from "@/types/sensor";
+import { formatLabel, getTimeRangeType } from "@/helpers/chartFormatter";
 
 ChartJS.register(
   CategoryScale,
@@ -38,8 +39,12 @@ const HeatingAndCoolingDemandChart: React.FC<
     setHistory((prev) => [...prev, ...newEntries]);
   }, [data]);
 
+  const timeRangeType = getTimeRangeType(history);
+
   const chartData = {
-    labels: history.map((item) => item.time),
+    labels: history.map((item) =>
+      formatLabel(item.date, item.time, timeRangeType)
+    ),
     datasets: [
       {
         label: "Isıtma Talebi",

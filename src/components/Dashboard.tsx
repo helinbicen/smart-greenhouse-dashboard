@@ -6,7 +6,7 @@ import { Loader } from "react-feather";
 import RealtimeData from "./RealtimeData";
 
 const Dashboard = () => {
-  const { data, loading, error } = useFetchData("sensorData");
+  const { data, loading, error } = useFetchData("current");
   const [viewType, setViewType] = useState<"historical" | "realTime">();
 
   if (loading) {

@@ -625,9 +625,17 @@ export const generateMockData = (): SensorData => {
   const moisture = Math.random() * (100 - 20) + 20;
 
   const temperatureCategory =
-    temperature < 18 ? "low" : temperature < 25 ? "medium" : "high";
+    temperature < 18
+      ? TemperatureCategory.LOW
+      : temperature < 25
+      ? TemperatureCategory.MEDIUM
+      : TemperatureCategory.HIGH;
   const moistureCategory =
-    moisture < 30 ? "dry" : moisture < 70 ? "optimal" : "wet";
+    moisture < 30
+      ? MoistureCategory.DRY
+      : moisture < 70
+      ? MoistureCategory.OPTIMAL
+      : MoistureCategory.WET;
 
   return {
     date,

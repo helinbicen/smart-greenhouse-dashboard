@@ -9,7 +9,7 @@ const useFetchData = (endpoint: string, isReport: boolean = false) => {
   const [data, setData] = useState<SensorData | SensorData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +23,6 @@ const useFetchData = (endpoint: string, isReport: boolean = false) => {
         } else {
           const mockData = generateMockData(); // TODO: Backend entegrasyonu sonrası kaldırılacak
           setData(mockData);
-          // setData(mockDailyData)
         }
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -44,7 +43,7 @@ const useFetchData = (endpoint: string, isReport: boolean = false) => {
       } else {
         fetchData();
       }
-    }, 2000);
+    }, 3600000);
 
     return () => clearInterval(interval);
   }, [endpoint, apiUrl, isReport]);
