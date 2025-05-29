@@ -43,7 +43,7 @@ const useFetchData = (endpoint: string, isReport: boolean = false) => {
       } else {
         fetchData();
       }
-    }, 10000);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, [endpoint, apiUrl, isReport]);
