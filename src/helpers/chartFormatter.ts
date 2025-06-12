@@ -1,29 +1,25 @@
 import { SensorData } from "@/types/sensor";
 import { Timeframe, TimeframeCategory } from "@/types/timeframe";
+import dayjs from "dayjs";
 
 export const formatChartLabels = (
   history: SensorData[],
   timeframe: Timeframe
 ): string[] => {
   return history.map((item) => {
-    const dateParts = new Date(`${item.date} ${item.time}`);
-    const isoString = new Date(dateParts).toISOString();
-    const localDate = new Date(isoString);
+    if (!item.date || !item.time) return "";
+
+    const date = dayjs(`${item.date} ${item.time}`, 'YYYY-MM-DD HH:mm', true);
+    if (!date.isValid()) return "";
 
     switch (timeframe) {
       case TimeframeCategory.REALTIME:
       case TimeframeCategory.DAILY:
-        return localDate.toLocaleTimeString("tr-TR", {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
+        return date.format("HH:mm");
 
       case TimeframeCategory.WEEKLY:
       case TimeframeCategory.MONTHLY:
-        return localDate.toLocaleDateString("tr-TR", {
-          day: "2-digit",
-          month: "short",
-        });
+        return date.format("DD MMM");
 
       default:
         return "";
