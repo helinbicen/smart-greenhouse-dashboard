@@ -617,11 +617,7 @@ export const mockMonthlyData: SensorData[] = [
 
 export const generateMockData = (): SensorData => {
   const now = new Date();
-  const date = now.toLocaleDateString("tr-TR", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }); 
+  const date = now.toISOString().split("T")[0]; 
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const time = `${hours}:${minutes}`;
